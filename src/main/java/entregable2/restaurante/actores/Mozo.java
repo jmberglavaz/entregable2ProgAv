@@ -1,18 +1,16 @@
 package main.java.entregable2.restaurante.actores;
 
-import main.java.entregable2.restaurante.concurrencia.ColaLlamadosMozo;
-import main.java.entregable2.restaurante.concurrencia.ColaPedidos;
-import main.java.entregable2.restaurante.concurrencia.MostradorPlatos;
+import main.java.entregable2.restaurante.concurrencia.interfaces.ColaLlamadosMozo;
+import main.java.entregable2.restaurante.concurrencia.interfaces.ColaPedidos;
+import main.java.entregable2.restaurante.concurrencia.interfaces.MostradorPlatos;
 import main.java.entregable2.restaurante.config.Configuracion;
 import main.java.entregable2.restaurante.display.CanalEventos;
 import main.java.entregable2.restaurante.display.Evento;
 import main.java.entregable2.restaurante.log.LogSimulacion;
 import main.java.entregable2.restaurante.modelo.Mesa;
-import main.java.entregable2.restaurante.log.LogSimulacion;
 import main.java.entregable2.restaurante.modelo.*;
-import main.java.entregable2.restaurante.modelo.enums.EstadoMesa;
 import main.java.entregable2.restaurante.util.Aleatorio;
-import main.java.entregable2.restaurante.actores.Cliente;
+
 import java.util.concurrent.TimeUnit;
 
 import java.util.List;

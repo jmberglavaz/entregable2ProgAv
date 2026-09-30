@@ -1,6 +1,6 @@
-package main.java.entregable2.restaurante.display;
+package main.java.entregable2.restaurante.concurrencia.implementaciones;
 
-import main.java.entregable2.restaurante.concurrencia.ColaLlamadosMozo;
+import main.java.entregable2.restaurante.concurrencia.interfaces.ColaLlamadosMozo;
 import main.java.entregable2.restaurante.modelo.Mesa;
 
 import java.util.concurrent.BlockingQueue;
