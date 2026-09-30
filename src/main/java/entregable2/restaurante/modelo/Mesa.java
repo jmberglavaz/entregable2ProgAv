@@ -1,7 +1,10 @@
 package main.java.entregable2.restaurante.modelo;
 
 import main.java.entregable2.restaurante.modelo.enums.EstadoMesa;
+import main.java.entregable2.restaurante.util.IdGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -19,6 +22,9 @@ public class Mesa {
     private int ocupantes = 0;
     private int clientesEligieron = 0;
     private int clientesServidos = 0;
+    private List<Menu> menusElegidos = new ArrayList<>();
+    private Pedido pedidoActual = null;
+
 
     public Mesa(int capacidad) {
         this.id = ID_GEN.getAndIncrement();
@@ -41,6 +47,7 @@ public class Mesa {
         ocupantes = 0;
         clientesEligieron = 0;
         clientesServidos = 0;
+        menusElegidos.clear();
         notifyAll();
     }
 
@@ -48,10 +55,16 @@ public class Mesa {
      * Cada cliente avisa que ya eligió su menú.
      * @return true si este cliente fue el último (debe avisar al mozo).
      */
-    public synchronized boolean registrarMenuElegido() {
+    public synchronized boolean registrarMenuElegido(Menu menu) {
+        menusElegidos.add(menu);
         clientesEligieron++;
-        return clientesEligieron == capacidad;
+        if (clientesEligieron == capacidad) {
+            notifyAll();
+            return true;
+        }
+        return false;
     }
+
 
     /**
      * El mozo avisa que sirvió un plato.
@@ -87,4 +100,53 @@ public class Mesa {
     public synchronized EstadoMesa getEstado() { return estado; }
     public int getId() { return id; }
     public int getCapacidad() { return capacidad; }
+    public synchronized List<Menu> getMenusElegidos() {
+        return new ArrayList<>(menusElegidos);
+    }
+    /**
+     * Construye el Pedido a partir de los menús elegidos.
+     * El Mozo lo llama al tomar el pedido.
+     */
+    public synchronized Pedido construirPedido() {
+        if (menusElegidos.isEmpty()) {
+            throw new IllegalStateException(
+                    "Mesa " + id + " no tiene menús elegidos");
+        }
+        int idPedido = IdGenerator.nextPedidoId();
+        this.pedidoActual = new Pedido(idPedido, id, new ArrayList<>(menusElegidos));
+        return this.pedidoActual;
+    }
+
+    /**
+     * El Mozo ya pasó el pedido a cocina.
+     */
+    public synchronized void marcarPedidoEnviado() {
+        this.estado = EstadoMesa.ESPERANDO_COMIDA;
+        notifyAll();
+    }
+
+    /**
+     * El Mozo entrega un plato. Cuando están todos, los clientes comen.
+     */
+    public synchronized void recibirPlato(Plato plato) {
+        clientesServidos++;
+        if (clientesServidos == capacidad) {
+            estado = EstadoMesa.COMIENDO;
+            notifyAll();
+        }
+    }
+
+    /**
+     * El Mozo terminó de limpiar.
+     */
+    public synchronized void marcarComoLibre() {
+        estado = EstadoMesa.LIBRE;
+        ocupantes = 0;
+        clientesEligieron = 0;
+        clientesServidos = 0;
+        menusElegidos.clear();
+        pedidoActual = null;
+        notifyAll();
+    }
+
 }

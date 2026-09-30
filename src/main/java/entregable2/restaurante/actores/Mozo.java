@@ -1,4 +1,120 @@
 package main.java.entregable2.restaurante.actores;
 
-public class Mozo {
+import main.java.entregable2.restaurante.concurrencia.ColaLlamadosMozo;
+import main.java.entregable2.restaurante.concurrencia.ColaPedidos;
+import main.java.entregable2.restaurante.concurrencia.MostradorPlatos;
+import main.java.entregable2.restaurante.config.Configuracion;
+import main.java.entregable2.restaurante.display.CanalEventos;
+import main.java.entregable2.restaurante.display.Evento;
+import main.java.entregable2.restaurante.log.LogSimulacion;
+import main.java.entregable2.restaurante.modelo.Mesa;
+import main.java.entregable2.restaurante.log.LogSimulacion;
+import main.java.entregable2.restaurante.modelo.*;
+import main.java.entregable2.restaurante.modelo.enums.EstadoMesa;
+import main.java.entregable2.restaurante.util.Aleatorio;
+import main.java.entregable2.restaurante.actores.Cliente;
+import java.util.concurrent.TimeUnit;
+
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class Mozo implements Runnable {
+    private final int id;
+    private final ColaPedidos colaPedidos;
+    private final MostradorPlatos mostradorPlatos;
+    private final ColaLlamadosMozo colaLlamados;
+    private final List<Mesa> mesas;
+    private final CanalEventos canalEventos;
+    private final LogSimulacion log;
+    private final AtomicBoolean activo;
+    private final Configuracion config;
+    private final BlockingQueue<Mesa> mesasParaLimpiar;
+
+
+    public Mozo(int id, ColaPedidos colaPedidos, MostradorPlatos mostradorPlatos,
+                ColaLlamadosMozo colaLlamados, List<Mesa> mesas, CanalEventos canalEventos,
+                LogSimulacion log, AtomicBoolean activo, Configuracion config,  BlockingQueue<Mesa> mesasParaLimpiar) {
+        this.id = id;
+        this.colaPedidos = colaPedidos;
+        this.mostradorPlatos = mostradorPlatos;
+        this.colaLlamados = colaLlamados;
+        this.mesas = mesas;
+        this.canalEventos = canalEventos;
+        this.log = log;
+        this.activo = activo;
+        this.config = config;
+        this.mesasParaLimpiar = mesasParaLimpiar;
+    }
+
+    @Override
+    public void run() {
+        log.log("Mozo"+ id + "inicia turno");
+        try{
+            while(activo.get()){
+                boolean hizoAlgo = false;
+                //servir platos listos
+                Plato plato = mostradorPlatos.retirar();
+                if (plato != null){
+                    servirPlato(plato);
+                    hizoAlgo = true;
+                }
+                //atender llamado de mesa
+                if (!hizoAlgo){
+                    Mesa mesa= colaLlamados.esperarLlamado();
+                    if (mesa != null){
+                        tomarPedido(mesa);
+                        hizoAlgo = true;
+                    }
+                }
+                //limpiar mesas sucias
+                if (!hizoAlgo) {
+                    Mesa mesaSucia = mesasParaLimpiar.poll(200, TimeUnit.MILLISECONDS);
+                    if (mesaSucia != null) {
+                        limpiarMesa(mesaSucia);
+                        hizoAlgo = true;
+                    }
+                }
+
+            }
+        }
+        catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+        log.log("Mozo" + id + "termina turno");
+
+    }
+    private void tomarPedido(Mesa mesa) throws InterruptedException{
+        long demora = Aleatorio.entre(config.getTzMin(), config.getTzMax());
+        Thread.sleep(demora);
+        //constuir pedido desde la mesa
+        Pedido pedido = mesa.construirPedido();
+        canalEventos.publicar (new Evento("MOZO", id, "Toma pedido de mesa" + mesa.getId()));
+        log.log("Mozo" + id + "toma pedido" + pedido.getId() + "de mesa" + mesa.getId());
+        //pasar pedido a cocina
+        colaPedidos.agregarALaCola(pedido);
+        mesa.marcarPedidoEnviado(); //cambia a estado ESPERANDO_COMIDA
+    }
+    private void servirPlato(Plato plato) throws InterruptedException{
+        long demora = Aleatorio.entre(config.getTrMin(), config.getTrMax());
+        Thread.sleep(demora);
+        canalEventos.publicar(new Evento("MOZO", id, "sirve plato" + plato.getId() + "a mesa" + plato.getIdMesa()));
+        log.log("Mozo" + id + "sirve plato" + plato.getId() + "a mesa" + plato.getIdMesa());
+        Mesa mesa = buscarMesa(plato.getIdMesa());
+        if (mesa != null){
+            mesa.recibirPlato(plato);
+        }
+    }
+    private void limpiarMesa(Mesa mesa) throws InterruptedException {
+        long demora = Aleatorio.entre(config.getTlMin(), config.getTlMax());
+        Thread.sleep(demora);
+        canalEventos.publicar(new Evento("MOZO", id, "limpia mesa" + mesa.getId()));
+        log.log("Mozo" + id + "limpia mesa" + mesa.getId());
+        mesa.marcarLibre();
+    }
+
+
+    private Mesa buscarMesa(int idMesa){
+        return mesas.stream().filter(m -> m.getId()==idMesa).findFirst().orElse(null);
+    }
 }

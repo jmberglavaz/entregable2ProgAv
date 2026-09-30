@@ -35,7 +35,7 @@ public class Cliente implements Runnable {
     private final PuertasRestaurante puertas;
     private final GestorMesas gestorMesas;
     private final ColaCobros colaCobros;
-    private final BlockingQueue<Mesa> llamarMozo;
+    private final ColaLlamadosMozo colaLlamadosMozo;
     private final BlockingQueue<Mesa> mesasParaLimpiar;
     private final List<Menu> menuDisponible;
     private final SincronizacionInicio inicio;
@@ -51,7 +51,7 @@ public class Cliente implements Runnable {
                    PuertasRestaurante puertas,
                    GestorMesas gestorMesas,
                    ColaCobros colaCobros,
-                   BlockingQueue<Mesa> llamarMozo,
+                   BlockingQueue<Mesa> llamarMozo, ColaLlamadosMozo colaLlamadosMozo,
                    BlockingQueue<Mesa> mesasParaLimpiar,
                    List<Menu> menuDisponible,
                    SincronizacionInicio inicio,
@@ -63,7 +63,7 @@ public class Cliente implements Runnable {
         this.puertas = puertas;
         this.gestorMesas = gestorMesas;
         this.colaCobros = colaCobros;
-        this.llamarMozo = llamarMozo;
+        this.colaLlamadosMozo = colaLlamadosMozo;
         this.mesasParaLimpiar = mesasParaLimpiar;
         this.menuDisponible = menuDisponible;
         this.inicio = inicio;
@@ -99,11 +99,11 @@ public class Cliente implements Runnable {
             eventos.publicar(Evento.clienteEligioMenu(id, menuElegido.getNombre()));
 
             // 5. Avisar al mozo: solo el último del grupo encola la mesa
-            boolean soyUltimo = mesa.registrarMenuElegido();
+            boolean soyUltimo = mesa.registrarMenuElegido(menuElegido);
             if (soyUltimo) {
                 log.accion(id, "Mesa " + mesa.getId() + " lista para pedir");
                 eventos.publicar(Evento.mesaListaParaPedir(mesa.getId()));
-                llamarMozo.put(mesa);
+                colaLlamadosMozo.llamarMozo(mesa);
             }
 
             // 6. Esperar que el mozo sirva todos los platos

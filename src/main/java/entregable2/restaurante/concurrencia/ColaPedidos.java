@@ -8,7 +8,7 @@ import main.java.entregable2.restaurante.modelo.Pedido;
  * Herramienta: BlockingQueue (pág. 83-84).
  */
 public interface ColaPedidos {
-    void encolar(Pedido pedido) throws InterruptedException;
+    void agregarALaCola(Pedido pedido) throws InterruptedException;
     Pedido tomar() throws InterruptedException;
     int tamano();
     boolean estaVacia();
