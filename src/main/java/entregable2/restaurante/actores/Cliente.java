@@ -1,6 +1,8 @@
 package main.java.entregable2.restaurante.actores;
 
 import main.java.entregable2.restaurante.concurrencia.*;
+import main.java.entregable2.restaurante.concurrencia.interfaces.ColaCobros;
+import main.java.entregable2.restaurante.concurrencia.interfaces.ColaLlamadosMozo;
 import main.java.entregable2.restaurante.config.Configuracion;
 import main.java.entregable2.restaurante.display.CanalEventos;
 import main.java.entregable2.restaurante.display.Evento;

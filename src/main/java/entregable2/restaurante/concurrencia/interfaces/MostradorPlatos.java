@@ -1,4 +1,4 @@
-package main.java.entregable2.restaurante.concurrencia;
+package main.java.entregable2.restaurante.concurrencia.interfaces;
 
 import main.java.entregable2.restaurante.modelo.Plato;
 
@@ -9,5 +9,5 @@ import main.java.entregable2.restaurante.modelo.Plato;
 public interface MostradorPlatos {
     void poner(Plato plato) throws InterruptedException;
     Plato retirar() throws InterruptedException;
-    int tamanio();
+    int tamano();
 }

@@ -1,4 +1,4 @@
-package main.java.entregable2.restaurante.concurrencia;
+package main.java.entregable2.restaurante.concurrencia.interfaces;
 
 import main.java.entregable2.restaurante.actores.Cliente;
 

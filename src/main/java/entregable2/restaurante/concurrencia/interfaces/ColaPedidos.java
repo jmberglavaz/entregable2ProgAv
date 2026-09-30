@@ -1,11 +1,11 @@
-package main.java.entregable2.restaurante.concurrencia;
+package main.java.entregable2.restaurante.concurrencia.interfaces;
 
 import main.java.entregable2.restaurante.modelo.Pedido;
 
 /**
  * Cola de pedidos: clientes/mozos (productores) → cocina (consumidores).
- * Patrón: Productor-Consumidor (pág. 96-99 del PDF).
- * Herramienta: BlockingQueue (pág. 83-84).
+ * Patrón: Productor-Consumidor.
+ * Herramienta: BlockingQueue.
  */
 public interface ColaPedidos {
     void agregarALaCola(Pedido pedido) throws InterruptedException;
