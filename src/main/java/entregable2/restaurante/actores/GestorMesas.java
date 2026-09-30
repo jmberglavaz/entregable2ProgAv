@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,6 +18,11 @@ import java.util.concurrent.locks.ReentrantLock;
  * Herramientas:
  *  - BlockingQueue para pasaje de mensajes entre clientes y hostess.
  *  - ReentrantLock + Condition para exclusión mutua al elegir mesa.
+ *
+ * Opción 3:
+ *  - run() usa poll(500ms) en lugar de take() para poder chequear "activo".
+ *  - esperarMesaLibre() usa await(500ms) en lugar de await().
+ *  - detener() hace signalAll() para despertar a los que esperan.
  */
 public final class GestorMesas implements Runnable {
 
@@ -52,19 +58,51 @@ public final class GestorMesas implements Runnable {
         }
     }
 
-    public void detener() { activo = false; }
+    /**
+     * Detiene el GestorMesas. Despierta a todos los que esperan mesa.
+     */
+    public void detener() {
+        activo = false;
+        // Despertar a los que esperan en esperarMesaLibre()
+        lock.lock();
+        try {
+            mesaLibre.signalAll();
+        } finally {
+            lock.unlock();
+        }
+    }
 
     @Override
     public void run() {
         try {
             while (activo) {
-                // 1. Agrupar de a P (bloquea hasta que haya P solicitudes)
+                // 1. Agrupar de a P (con timeout para chequear "activo")
                 List<Solicitud> grupo = new ArrayList<>(p);
+                boolean grupoCompleto = true;
+
                 for (int i = 0; i < p; i++) {
-                    grupo.add(colaSolicitudes.take());
+                    Solicitud s = colaSolicitudes.poll(500, TimeUnit.MILLISECONDS);
+                    if (s == null) {
+                        if (!activo) {
+                            grupoCompleto = false;
+                            break;
+                        }
+                        i--; // reintentar
+                        continue;
+                    }
+                    grupo.add(s);
                 }
+
+                if (!grupoCompleto) {
+                    break; // salir del bucle
+                }
+
                 // 2. Conseguir mesa libre
                 Mesa mesa = esperarMesaLibre();
+                if (mesa == null) {
+                    break; // salir del bucle (activo = false)
+                }
+
                 // 3. Avisar a los P del grupo
                 for (Solicitud s : grupo) {
                     s.respuesta().put(mesa);
@@ -78,14 +116,15 @@ public final class GestorMesas implements Runnable {
     private Mesa esperarMesaLibre() throws InterruptedException {
         lock.lock();
         try {
-            while (true) {
+            while (activo) {
                 for (Mesa m : mesas) {
                     if (m.intentarOcupar()) {
                         return m;
                     }
                 }
-                mesaLibre.await();
+                mesaLibre.await(500, TimeUnit.MILLISECONDS); // timeout para chequear activo
             }
+            return null; // activo = false
         } finally {
             lock.unlock();
         }

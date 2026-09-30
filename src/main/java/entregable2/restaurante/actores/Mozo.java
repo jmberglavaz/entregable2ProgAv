@@ -87,8 +87,8 @@ public class Mozo implements Runnable {
         Thread.sleep(demora);
         //constuir pedido desde la mesa
         Pedido pedido = mesa.construirPedido();
-        canalEventos.publicar (new Evento("MOZO", id, "Toma pedido de mesa" + mesa.getId()));
-        log.log("Mozo" + id + "toma pedido" + pedido.getId() + "de mesa" + mesa.getId());
+        canalEventos.publicar(new Evento("MOZO", id, "Mozo " + id + " toma pedido de mesa " + mesa.getId()));
+        log.log("Mozo " + id + " toma pedido " + pedido.getId() + " de mesa " + mesa.getId());
         //pasar pedido a cocina
         colaPedidos.agregarALaCola(pedido);
         mesa.marcarPedidoEnviado(); //cambia a estado ESPERANDO_COMIDA
@@ -96,7 +96,7 @@ public class Mozo implements Runnable {
     private void servirPlato(Plato plato) throws InterruptedException{
         long demora = Aleatorio.entre(config.getTrMin(), config.getTrMax());
         Thread.sleep(demora);
-        canalEventos.publicar(new Evento("MOZO", id, "sirve plato" + plato.getId() + "a mesa" + plato.getIdMesa()));
+        canalEventos.publicar(new Evento("MOZO", id, "Mozo" + id + " sirve plato" + plato.getId() + "a mesa" + plato.getIdMesa()));
         log.log("Mozo" + id + "sirve plato" + plato.getId() + "a mesa" + plato.getIdMesa());
         Mesa mesa = buscarMesa(plato.getIdMesa());
         if (mesa != null){
@@ -106,7 +106,7 @@ public class Mozo implements Runnable {
     private void limpiarMesa(Mesa mesa) throws InterruptedException {
         long demora = Aleatorio.entre(config.getTlMin(), config.getTlMax());
         Thread.sleep(demora);
-        canalEventos.publicar(new Evento("MOZO", id, "limpia mesa" + mesa.getId()));
+        canalEventos.publicar(new Evento("MOZO", id, "Mozo" + id + " limpia mesa" + mesa.getId()));
         log.log("Mozo" + id + "limpia mesa" + mesa.getId());
         mesa.marcarLibre();
     }

@@ -1,5 +1,8 @@
-package main.java.entregable2.restaurante.display;
+package main.java.entregable2.restaurante.concurrencia.implementaciones;
 
+
+import main.java.entregable2.restaurante.display.CanalEventos;
+import main.java.entregable2.restaurante.display.Evento;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

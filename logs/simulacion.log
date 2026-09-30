@@ -1,0 +1,112 @@
+[19:43:17.798] [LOG] === SIMULACIÓN INICIADA ===
+[19:43:17.820] [LOG] Config: Configuracion{T=30, M=5, P=4, Z=2, C=2, Y=1, TP=[1500,3000], TM=[800,2000], TQ=[3000,6000], TZ=[800,2000], TR=[1000,2500], TL=[1000,2500], TC=[2000,5000], TY=[1000,2000]}
+[19:43:17.838] [LOG] Cajero 1 inicia turno
+[19:43:17.839] [LOG] Cocinero 2 inicia turno
+[19:43:17.839] [LOG] Cocinero 1 inicia turno
+[19:43:17.839] [LOG] Mozo2inicia turno
+[19:43:17.840] [LOG] Mozo1inicia turno
+[19:43:18.601] [LOG] Display: iniciado
+[19:43:18.608] [LOG] Reloj: esperando T=30s (30000ms)
+[19:43:20.557] [LOG #1] Cliente 1 ingresó al restaurante
+[19:43:23.198] [LOG #2] Cliente 2 ingresó al restaurante
+[19:43:25.720] [LOG #3] Cliente 3 ingresó al restaurante
+[19:43:27.846] [LOG #4] Cliente 4 ingresó al restaurante
+[19:43:27.849] [LOG #1] Cliente 1 se sentó en mesa 1
+[19:43:27.849] [LOG #3] Cliente 3 se sentó en mesa 1
+[19:43:27.850] [LOG #2] Cliente 2 se sentó en mesa 1
+[19:43:27.850] [LOG #4] Cliente 4 se sentó en mesa 1
+[19:43:28.805] [LOG #1] Cliente 1 eligió menú Pasta
+[19:43:29.078] [LOG #3] Cliente 3 eligió menú Ensalada
+[19:43:29.133] [LOG #4] Cliente 4 eligió menú Pasta
+[19:43:29.762] [LOG #2] Cliente 2 eligió menú Ensalada
+[19:43:29.770] [LOG #2] Mesa 1 lista para pedir
+[19:43:30.348] [LOG #5] Cliente 5 ingresó al restaurante
+[19:43:31.715] [LOG] Mozo 2 toma pedido 1 de mesa 1
+[19:43:31.715] [LOG #2] Cocinero 2 tomó pedido 1 de mesa 1
+[19:43:32.306] [LOG #6] Cliente 6 ingresó al restaurante
+[19:43:34.602] [LOG #7] Cliente 7 ingresó al restaurante
+[19:43:35.314] [LOG #2] Cocinero 2 cocinó Pasta para pedido 1
+[19:43:36.577] [LOG] Mozo2sirve plato1a mesa1
+[19:43:36.757] [LOG #8] Cliente 8 ingresó al restaurante
+[19:43:36.758] [LOG #5] Cliente 5 se sentó en mesa 2
+[19:43:36.758] [LOG #6] Cliente 6 se sentó en mesa 2
+[19:43:36.759] [LOG #7] Cliente 7 se sentó en mesa 2
+[19:43:36.762] [LOG #8] Cliente 8 se sentó en mesa 2
+[19:43:37.131] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 1
+[19:43:37.639] [LOG #8] Cliente 8 eligió menú Asado
+[19:43:37.721] [LOG #6] Cliente 6 eligió menú Pasta
+[19:43:38.428] [LOG] Mozo2sirve plato2a mesa1
+[19:43:38.733] [LOG #5] Cliente 5 eligió menú Asado
+[19:43:38.741] [LOG #7] Cliente 7 eligió menú Pasta
+[19:43:38.741] [LOG #7] Mesa 2 lista para pedir
+[19:43:39.239] [LOG #2] Cocinero 2 cocinó Pasta para pedido 1
+[19:43:39.712] [LOG #9] Cliente 9 ingresó al restaurante
+[19:43:39.748] [LOG] Mozo 1 toma pedido 2 de mesa 2
+[19:43:39.751] [LOG #1] Cocinero 1 tomó pedido 2 de mesa 2
+[19:43:40.924] [LOG] Mozo2sirve plato3a mesa1
+[19:43:41.152] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 1
+[19:43:41.181] [LOG #2] Pedido 1 completo
+[19:43:41.302] [LOG #10] Cliente 10 ingresó al restaurante
+[19:43:43.114] [LOG] Mozo1sirve plato4a mesa1
+[19:43:43.115] [LOG #4] Cliente 4 tiene su plato en mesa 1
+[19:43:43.115] [LOG #2] Cliente 2 tiene su plato en mesa 1
+[19:43:43.115] [LOG #3] Cliente 3 tiene su plato en mesa 1
+[19:43:43.115] [LOG #1] Cliente 1 tiene su plato en mesa 1
+[19:43:44.112] [LOG #11] Cliente 11 ingresó al restaurante
+[19:43:45.529] [LOG #1] Cocinero 1 cocinó Asado para pedido 2
+[19:43:45.728] [LOG #12] Cliente 12 ingresó al restaurante
+[19:43:45.728] [LOG #9] Cliente 9 se sentó en mesa 3
+[19:43:45.733] [LOG #10] Cliente 10 se sentó en mesa 3
+[19:43:45.737] [LOG #12] Cliente 12 se sentó en mesa 3
+[19:43:45.737] [LOG #11] Cliente 11 se sentó en mesa 3
+[19:43:46.179] [LOG #1] Cliente 1 terminó de comer
+[19:43:46.191] [LOG #1] Cliente 1 pagó
+[19:43:46.194] [LOG #1] Cliente 1 se retiró del restaurante
+[19:43:46.206] [LOG #3] Cliente 3 terminó de comer
+[19:43:46.206] [LOG #3] Cliente 3 pagó
+[19:43:46.206] [LOG #3] Cliente 3 se retiró del restaurante
+[19:43:46.461] [LOG #4] Cliente 4 terminó de comer
+[19:43:46.461] [LOG #4] Cliente 4 pagó
+[19:43:46.461] [LOG #4] Cliente 4 se retiró del restaurante
+[19:43:46.654] [LOG #2] Cliente 2 terminó de comer
+[19:43:46.655] [LOG #2] Cliente 2 pagó
+[19:43:46.656] [LOG #2] Mesa 1 quedó sin clientes
+[19:43:46.673] [LOG #2] Cliente 2 se retiró del restaurante
+[19:43:46.686] [LOG #10] Cliente 10 eligió menú Pasta
+[19:43:47.215] [LOG #1] Cajero 1 cobró a cliente 1
+[19:43:47.270] [LOG #9] Cliente 9 eligió menú Pasta
+[19:43:47.302] [LOG] Mozo1sirve plato5a mesa2
+[19:43:47.553] [LOG #13] Cliente 13 ingresó al restaurante
+[19:43:47.643] [LOG #11] Cliente 11 eligió menú Asado
+[19:43:47.688] [LOG #12] Cliente 12 eligió menú Ensalada
+[19:43:47.688] [LOG #12] Mesa 3 lista para pedir
+[19:43:48.610] [LOG] Reloj: T cumplido, disparando cierre
+[19:43:48.610] [LOG] === INICIANDO CIERRE DEL RESTAURANTE ===
+[19:43:48.930] [LOG] Mozo2limpia mesa1
+[19:43:48.935] [LOG #1] Cajero 1 cobró a cliente 3
+[19:43:48.980] [LOG] Mozo 1 toma pedido 3 de mesa 3
+[19:43:48.981] [LOG #2] Cocinero 2 tomó pedido 3 de mesa 3
+[19:43:49.171] [LOG #1] Cocinero 1 cocinó Pasta para pedido 2
+[19:43:50.922] [LOG #1] Cajero 1 cobró a cliente 4
+[19:43:51.390] [LOG] Mozo1sirve plato6a mesa2
+[19:43:52.195] [LOG #1] Cajero 1 cobró a cliente 2
+[19:43:52.603] [LOG #2] Cocinero 2 cocinó Pasta para pedido 3
+[19:43:54.051] [LOG #1] Cocinero 1 cocinó Asado para pedido 2
+[19:43:54.268] [LOG] Mozo2sirve plato7a mesa3
+[19:43:54.530] [LOG] Display: finalizado
+[19:43:54.531] [LOG] Cocinero 1 termina turno
+[19:43:54.531] [LOG #10] Cliente 10 interrumpido (cierre)
+[19:43:54.533] [LOG #7] Cliente 7 interrumpido (cierre)
+[19:43:54.534] [LOG #6] Cliente 6 interrumpido (cierre)
+[19:43:54.535] [LOG] Cajero 1 termina turno
+[19:43:54.536] [LOG] Cocinero 2 termina turno
+[19:43:54.536] [LOG #12] Cliente 12 interrumpido (cierre)
+[19:43:54.537] [LOG #8] Cliente 8 interrumpido (cierre)
+[19:43:54.537] [LOG] === TODOS LOS CLIENTES SE RETIRARON ===
+[19:43:54.538] [LOG] Mozo1termina turno
+[19:43:54.538] [LOG #5] Cliente 5 interrumpido (cierre)
+[19:43:54.538] [LOG #9] Cliente 9 interrumpido (cierre)
+[19:43:54.541] [LOG #11] Cliente 11 interrumpido (cierre)
+[19:43:54.542] [LOG] Mozo2termina turno
+[19:43:54.542] [LOG #13] Cliente 13 interrumpido (cierre)
+[19:43:54.557] [LOG] === SIMULACIÓN FINALIZADA ===
