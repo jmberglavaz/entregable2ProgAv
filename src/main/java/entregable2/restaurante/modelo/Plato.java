@@ -9,6 +9,11 @@ public class Plato {
     private final Menu menu;
     private volatile EstadoPlato estado;
 
+    /**
+     * Plato individual. El campo estado es volatile: el cocinero lo escribe y el
+     * mozo/Display lo leen desde otros hilos; volatile asegura que vean el último
+     * valor.
+     */
     public Plato(int id, int idPedido, int idMesa, Menu menu) {
         this.id = id;
         this.idPedido = idPedido;

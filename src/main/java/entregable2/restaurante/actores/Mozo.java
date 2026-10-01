@@ -45,6 +45,16 @@ public class Mozo implements Runnable {
         this.mesasParaLimpiar = mesasParaLimpiar;
     }
 
+    /**
+     * Un hilo por mozo. Atiende TRES fuentes en rotación con poll(200 ms):
+     *   1) mostradorPlatos.retirar()        -> servir un plato listo
+     *   2) colaLlamados.esperarLlamado()    -> tomar un pedido
+     *   3) mesasParaLimpiar.poll(...)       -> limpiar una mesa
+     *
+     * Nunca se bloquea indefinidamente en una sola cola; así no se queda esperando
+     * un plato mientras hay una mesa sucia (evita inanición entre tareas).
+     * Termina cuando activo pasa a false o lo interrumpen.
+     */
     @Override
     public void run() {
         log.log("Mozo"+ id + "inicia turno");
@@ -82,6 +92,12 @@ public class Mozo implements Runnable {
         log.log("Mozo" + id + "termina turno");
 
     }
+    /**
+     * Simula el tiempo de anotar (sleep TZ), arma el Pedido desde la mesa
+     * (Mesa.construirPedido, synchronized), lo deposita en colaPedidos para los
+     * cocineros y pasa la mesa a ESPERANDO_COMIDA.
+     * Como la mesa viene de colaLlamados, solo un mozo atiende cada llamado.
+     */
     private void tomarPedido(Mesa mesa) throws InterruptedException{
         long demora = Aleatorio.entre(config.getTzMin(), config.getTzMax());
         Thread.sleep(demora);
@@ -93,6 +109,12 @@ public class Mozo implements Runnable {
         colaPedidos.agregarALaCola(pedido);
         mesa.marcarPedidoEnviado(); //cambia a estado ESPERANDO_COMIDA
     }
+
+    /**
+     * Simula el tiempo de servir (sleep TR), busca la mesa por id y llama
+     * mesa.recibirPlato(plato). Cuando sirve el último de los P platos, la Mesa
+     * hace notifyAll() y los clientes salen de esperarComida().
+     */
     private void servirPlato(Plato plato) throws InterruptedException{
         long demora = Aleatorio.entre(config.getTrMin(), config.getTrMax());
         Thread.sleep(demora);
@@ -103,6 +125,12 @@ public class Mozo implements Runnable {
             mesa.recibirPlato(plato);
         }
     }
+
+    /**
+     * Simula el tiempo de limpieza (sleep TL) y deja la mesa LIBRE.
+     * Nota: el GestorMesas se entera por su espera con timeout de 500 ms
+     * (await(500ms)), no por señal inmediata.
+     */
     private void limpiarMesa(Mesa mesa) throws InterruptedException {
         long demora = Aleatorio.entre(config.getTlMin(), config.getTlMax());
         Thread.sleep(demora);

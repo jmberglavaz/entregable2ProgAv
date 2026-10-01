@@ -10,7 +10,8 @@ import main.java.entregable2.restaurante.modelo.enums.EstadoMesa;
 import java.util.List;
 
 /**
- * Snapshot del estado del restaurante en un momento dado.
+ * Vista de solo lectura del estado general (mesas libres/ocupadas, tamaño de las
+ * colas). No guarda copias: consulta en el momento a objetos thread-safe.
  */
 public class SnapshotRestaurante {
 

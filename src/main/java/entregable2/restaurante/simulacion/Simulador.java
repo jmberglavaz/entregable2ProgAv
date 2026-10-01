@@ -36,6 +36,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Orquestador de la simulación (hilo "main").
+ *
+ * Crea los recursos compartidos (colas, mesas, aforo, puertas), lanza todos los
+ * actores en un pool de hilos y coordina el apagado.
+ *
+ * Concurrencia:
+ *  - AtomicBoolean activo: bandera de "simulación en curso" que leen todos los actores.
+ *    Es atómica y visible entre hilos (equivale a volatile), por eso no se cachea.
+ *  - AtomicInteger clientesCobrando: cuenta cuántos cajeros están cobrando ahora
+ *    (lo usa GestorCierre para saber si todavía hay trabajo en curso).
+ *  - Las colas son interfaces (ColaPedidos, MostradorPlatos...) con implementación
+ *    sobre BlockingQueue: los actores solo conocen el contrato, no la estructura.
+ */
+
 public class Simulador {
 
     private final Configuracion config;
@@ -86,6 +101,23 @@ public class Simulador {
         this.menuDisponible = crearMenus();
     }
 
+    /**
+     * Arranca y apaga toda la simulación. Corre en el hilo main.
+     *
+     * Pasos:
+     *  1. Crea el pool fijo de hilos (Z + C + Y + 100): cubre mozos, cocineros, cajeros
+     *     y deja margen para los clientes concurrentes, que son tareas Runnable.
+     *  2. Envía al pool: GestorMesas, Mozos, Cocineros, Cajeros, Display y RelojSimulacion.
+     *  3. Crea un Thread aparte "GeneradorClientes" que, cada TPmin..TPmax ms, crea un
+     *     Cliente y lo envía al pool mientras las puertas estén abiertas.
+     *  4. inicio.liberar() hace countDown() del CountDownLatch: es la "largada" común.
+     *  5. generador.join(): main se bloquea hasta que dejan de llegar clientes
+     *     (se cerraron las puertas).
+     *  6. Apagado ordenado: gestorMesas.detener() -> pool.shutdown() ->
+     *     awaitTermination(5s) -> shutdownNow() si no terminó (interrumpe a los hilos
+     *     que sigan bloqueados).
+     *  7. Cierra el display y el archivo de log.
+     */
     public void iniciar() {
         log.log("=== SIMULACIÓN INICIADA ===");
         log.log("Config: " + config);
@@ -146,14 +178,14 @@ public class Simulador {
 
         inicio.liberar();
 
-        // 1. Esperar a que el GeneradorClientes termine
+        // Esperar a que el GeneradorClientes termine
         try {
             generador.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
-        // 2. Cerrar el pool
+        //Cerrar el pool
         gestorMesas.detener();  // ← primero
         pool.shutdown();
         try {
@@ -165,7 +197,7 @@ public class Simulador {
             pool.shutdownNow();
         }
 
-        // 3. Marcar el Display como finalizado
+        //Marcar el Display como finalizado
         if (display != null) {
             display.cerrar();
         }

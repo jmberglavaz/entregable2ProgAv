@@ -1,5 +1,11 @@
 package main.java.entregable2.restaurante.display;
 
+/**
+ * Mensaje inmutable (todos sus campos son final) que viaja por el canal.
+ * Al ser inmutable se puede pasar de un hilo a otro sin sincronización extra.
+ * Los métodos estáticos (clienteIngreso, mesaVacia...) son fábricas con los
+ * textos ya armados.
+ */
 public class Evento {
 
     private final long timestamp;

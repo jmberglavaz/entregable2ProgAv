@@ -63,7 +63,8 @@ public class LogSimulacion {
     }
 
     /**
-     * Cerrar el archivo al final de la simulación.
+     * Cierra el BufferedWriter al final. Es synchronized para no cerrar mientras
+     * otro hilo está escribiendo.
      */
     public synchronized void cerrar() {
         try {

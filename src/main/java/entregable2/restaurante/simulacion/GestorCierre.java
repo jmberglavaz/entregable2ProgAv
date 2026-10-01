@@ -47,6 +47,16 @@ public class GestorCierre implements Runnable {
         this.log = log;
     }
 
+    /**
+     * Cierre ordenado del restaurante (se ejecuta en el hilo del Reloj).
+     *
+     * 1. puertas.cerrar(): escribe un campo volatile -> el GeneradorClientes y los
+     *    Clientes ven el cambio de inmediato (sin caché) y dejan de entrar gente.
+     * 2. Publica el evento "RESTAURANTE CERRADO" en el canal para el Display.
+     * 3. Espera a que se vacíe el local (esperarClientesTerminen).
+     * 4. activo.set(false): señal cooperativa que hace salir a Mozos, Cocineros,
+     *    Cajeros y Display de sus bucles.
+     */
     public void iniciarCierre() {
         log.log("=== INICIANDO CIERRE DEL RESTAURANTE ===");
         System.out.println("\n*** RESTAURANTE CERRADO ***\n");
@@ -72,6 +82,10 @@ public class GestorCierre implements Runnable {
         activo.set(false);
     }
 
+    /**
+     * Espera activa con sleep(500): consulta la condición cada medio segundo.
+     * Si el hilo es interrumpido, restaura el flag y sale del bucle.
+     */
     private void esperarClientesTerminen() {
         try {
             while (hayClientesEnRestaurante()) {
@@ -82,17 +96,26 @@ public class GestorCierre implements Runnable {
         }
     }
 
+    /**
+     * Condición de "todavía hay trabajo". Devuelve true si:
+     *  - alguna mesa tiene ocupantes o está en LIMPIEZA
+     *    (Mesa.estaVacia() y getEstado() son synchronized: lectura consistente),
+     *  - la cola de cobros no está vacía, o
+     *  - algún cajero está cobrando (AtomicInteger clientesCobrando > 0).
+     *
+     * Es solo lectura: no toma locks propios, por lo que no puede causar deadlock.
+     */
     private boolean hayClientesEnRestaurante() {
-        // 1. Mesas con clientes o en LIMPIEZA
+        // Mesas con clientes o en LIMPIEZA
         for (Mesa mesa : mesas) {
             if (!mesa.estaVacia()) return true;
             if (mesa.getEstado() == EstadoMesa.LIMPIEZA) return true;
         }
 
-        // 2. Cola de cobros no vacía
+        //Cola de cobros no vacía
         if (colaCobros.tamano() > 0) return true;
 
-        // 3. Cajeros cobrando
+        // Cajeros cobrando
         if (clientesCobrando.get() > 0) return true;
 
         return false;

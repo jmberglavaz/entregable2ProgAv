@@ -3,10 +3,13 @@ package main.java.entregable2.restaurante.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 /**
- * Configuración inmutable de la simulación.
- * Se carga una sola vez (holder idiom) y es segura para lectura concurrente.
+ * Configuración inmutable (todos los campos final), cargada una sola vez desde
+ * config.properties.
+ * Holder idiom: la clase interna Holder se inicializa de forma perezosa y
+ * thread-safe por la propia JVM (garantía de class loading), sin synchronized.
+ * Como es inmutable y se publica de forma segura, todos los hilos la leen sin
+ * sincronizar.
  */
 public final class Configuracion {
 

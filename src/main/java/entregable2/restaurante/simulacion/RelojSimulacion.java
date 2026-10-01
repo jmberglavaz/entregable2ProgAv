@@ -4,9 +4,11 @@ import main.java.entregable2.restaurante.config.Configuracion;
 import main.java.entregable2.restaurante.log.LogSimulacion;
 
 /**
- * Duerme T segundos y luego dispara el GestorCierre.
+ * Hilo "temporizador" de la simulación (1 hilo del pool).
  *
- * Herramienta: Thread con sleep.
+ * Duerme T segundos (Thread.sleep) y luego ejecuta gestorCierre.iniciarCierre()
+ * en este mismo hilo. Si lo interrumpen (shutdownNow) restaura el flag de
+ * interrupción y termina, sin tragarse la señal.
  */
 public class RelojSimulacion implements Runnable {
 

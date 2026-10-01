@@ -7,6 +7,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Cola de "mesas que quieren pedir": el último cliente de una mesa en elegir
+ * menú encola su Mesa; cualquier mozo libre la toma (poll con 200 ms de timeout).
+ * Si hubiese varios mozos, el primero que haga poll() se queda con la mesa; la
+ * cola garantiza que no la tomen dos a la vez.
+ */
 public class ColaLlamadosMozoImpl implements ColaLlamadosMozo {
 
     private final BlockingQueue<Mesa> cola = new LinkedBlockingQueue<>();

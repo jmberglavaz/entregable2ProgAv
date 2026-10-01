@@ -8,9 +8,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Recurso compartido entre clientes y mozos.
- * Herramientas: synchronized + wait/notifyAll.
- * Patrón: Monitor.
+ * RECURSO COMPARTIDO principal (clientes, mozos y GestorMesas la usan a la vez).
+ *
+ * Patrón: Monitor. Todo el estado mutable (estado, ocupantes, clientesEligieron,
+ * clientesServidos, menusElegidos, pedidoActual) se toca SOLO desde métodos
+ * synchronized -> exclusión mutua + visibilidad. Los hilos que deben esperar un
+ * cambio de estado usan wait() y se despiertan con notifyAll().
+ *
+ * Máquina de estados:
+ * LIBRE -> ESPERANDO_PEDIDO -> ESPERANDO_COMIDA -> COMIENDO -> LIMPIEZA -> LIBRE
+ *
+ * Nunca llama a código de otras clases mientras tiene su monitor -> no puede
+ * formar ciclos de espera (sin deadlock).
  */
 public class Mesa {
 

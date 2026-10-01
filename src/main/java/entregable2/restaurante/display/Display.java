@@ -21,13 +21,19 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Display visual del restaurante.
+ * Ventana Swing con el monitor en tiempo real. Implementa Runnable: corre en su
+ * propio hilo del pool para consumir eventos.
  *
- * Muestra:
- *  - Panel de EVENTOS con timestamps (últimos 30).
- *  - Panel de MESAS con colores.
- *  - Panel de COLAS con contadores.
- *  - Panel de RESUMEN.
+ * Hay tres hilos involucrados:
+ *  1. Hilo "Display" del pool: lee eventos del canal (bloqueante con timeout).
+ *  2. Hilo EDT de Swing: es el único que puede modificar componentes gráficos.
+ *  3. Timer de Swing: dispara actualizarEstado() cada 500 ms en el EDT.
+ *
+ * Regla de oro de Swing respetada: todo cambio visual se hace en el EDT con
+ * SwingUtilities.invokeLater(...).
+ *
+ * Para leer el estado actual (mesas, colas) usa métodos thread-safe:
+ * Mesa.getEstado() es synchronized y las colas usan size() de BlockingQueue.
  */
 public class Display extends JFrame implements Runnable {
 
@@ -61,7 +67,6 @@ public class Display extends JFrame implements Runnable {
     private static final Color COLOR_ESPERANDO_PEDIDO = new Color(255, 193, 7);
     private static final Color COLOR_ESPERANDO_COMIDA = new Color(255, 152, 0);
     private static final Color COLOR_COMIENDO = new Color(33, 150, 243);
-    private static final Color COLOR_PAGANDO = new Color(156, 39, 176);
     private static final Color COLOR_LIMPIEZA = new Color(244, 67, 54);
 
     public Display(CanalEventos canalEventos,
@@ -101,7 +106,7 @@ public class Display extends JFrame implements Runnable {
         centro.setBackground(COLOR_FONDO);
         centro.setBorder(new EmptyBorder(0, 15, 0, 15));
 
-        // Eventos (izquierda)
+        // Eventos
         areaEventos = new JTextArea();
         areaEventos.setEditable(false);
         areaEventos.setFont(new Font("Monospaced", Font.BOLD, 16));
@@ -120,7 +125,7 @@ public class Display extends JFrame implements Runnable {
         scrollEventos.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         centro.add(scrollEventos, BorderLayout.WEST);
 
-        // Mesas y colas (derecha)
+        // Mesas y colas
         JPanel panelDerecho = new JPanel();
         panelDerecho.setLayout(new BorderLayout(10, 10));
         panelDerecho.setBackground(COLOR_FONDO);
@@ -134,7 +139,6 @@ public class Display extends JFrame implements Runnable {
                 new Font("SansSerif", Font.BOLD, 16), COLOR_TITULO));
         panelDerecho.add(panelMesas, BorderLayout.CENTER);
 
-        // Colas
         JPanel panelColas = new JPanel();
         panelColas.setLayout(new GridLayout(1, 3, 15, 15));
         panelColas.setBackground(COLOR_PANEL);
@@ -156,7 +160,6 @@ public class Display extends JFrame implements Runnable {
         centro.add(panelDerecho, BorderLayout.CENTER);
         add(centro, BorderLayout.CENTER);
 
-        // FOOTER
         JPanel panelFooter = new JPanel(new BorderLayout());
         panelFooter.setBackground(COLOR_FONDO);
         panelFooter.setBorder(new EmptyBorder(10, 15, 15, 15));
@@ -189,6 +192,14 @@ public class Display extends JFrame implements Runnable {
         return label;
     }
 
+    /**
+     * Bucle del hilo Display:
+     *  - arranca el Timer de refresco (500 ms),
+     *  - mientras activo.get() sea true o queden eventos, pide el siguiente evento y
+     *    lo muestra con agregarEvento(); el "o queden eventos" asegura vaciar el
+     *    canal antes de terminar,
+     *  - al salir detiene el Timer, hace un último refresco y registra el cierre.
+     */
     @Override
     public void run() {
         log.log("Display: iniciado");
@@ -216,6 +227,14 @@ public class Display extends JFrame implements Runnable {
         System.out.println("=== DISPLAY FINALIZADO ===");
     }
 
+
+    /**
+     * Se llama desde el hilo Display pero la actualización visual se manda al EDT con
+     * invokeLater. Agrega la línea con hora formateada y mantiene solo los últimos
+     * 30 eventos (MAX_EVENTOS). La lista eventosRecientes se modifica únicamente
+     * dentro del EDT: está "confinada" a un solo hilo, por eso no necesita locks.
+     * Al final mueve el cursor al final del texto para el auto-scroll.
+     */
     private void agregarEvento(Evento evento) {
         SwingUtilities.invokeLater(() -> {
             String hora = LocalTime.now().format(TIME_FMT);
@@ -236,6 +255,15 @@ public class Display extends JFrame implements Runnable {
             areaEventos.setCaretPosition(areaEventos.getDocument().getLength());
         });
     }
+
+    /**
+     * Redibuja el panel de mesas y los contadores (pedidos, platos, cobros), más el
+     * resumen de mesas libres y ocupadas. Todo dentro de invokeLater (EDT).
+     * Lee valores compartidos con métodos thread-safe; el resultado es una
+     * "foto" del momento, y puede quedar un poco atrasada respecto al estado real
+     * (aceptable para una pantalla de monitoreo).
+     * Si activo es false muestra "RESTAURANTE CERRADO".
+     */
 
     private void actualizarEstado() {
         SwingUtilities.invokeLater(() -> {
@@ -270,13 +298,17 @@ public class Display extends JFrame implements Runnable {
         });
     }
 
-    public void cerrar() {
-        SwingUtilities.invokeLater(() -> {
-            labelEstado.setText("● SIMULACIÓN FINALIZADA");
-            labelEstado.setForeground(COLOR_LIMPIEZA);
-        });
-    }
 
+
+    /**
+     * Dibuja el cuadro de cada mesa. El color depende del EstadoMesa:
+     *  verde = LIBRE, amarillo = ESPERANDO_PEDIDO, naranja = ESPERANDO_COMIDA,
+     *  azul = COMIENDO, rojo = LIMPIEZA.
+     * getEstado() es synchronized, pero acá se llama dos veces (una para el color y
+     * otra para el texto): entre ambas llamadas el estado podría cambiar y mostrar
+     * color y texto desfasados por un instante. Mejora simple: guardar el estado en
+     * una variable local (EstadoMesa e = mesa.getEstado();) y usarla en las dos.
+     */
     private JPanel crearPanelMesa(Mesa mesa) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(obtenerColorEstado(mesa.getEstado()));
@@ -317,5 +349,16 @@ public class Display extends JFrame implements Runnable {
             case LIMPIEZA:         return "LIMPIEZA";
             default:               return estado.toString();
         }
+    }
+
+    /**
+     * La llama el Simulador al final (desde main). Como se toca un componente Swing,
+     * se delega al EDT con invokeLater para no violar la regla de hilos de Swing.
+     */
+    public void cerrar() {
+        SwingUtilities.invokeLater(() -> {
+            labelEstado.setText("SIMULACIÓN FINALIZADA");
+            labelEstado.setForeground(COLOR_LIMPIEZA);
+        });
     }
 }
