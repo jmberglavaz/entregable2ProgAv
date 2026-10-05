@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch;
  * Barrera de inicio: todos los hilos esperan hasta que el Simulador
  * dé la orden de arranque.
  *
- * Herramienta: CountDownLatch (pág. 83-84 del PDF).
+ * Herramienta: CountDownLatch
  *
  * Uso:
  *   - Simulador llama a liberar() cuando todos los hilos están creados.

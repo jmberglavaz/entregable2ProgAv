@@ -114,7 +114,7 @@ public class Simulador {
      *  5. generador.join(): main se bloquea hasta que dejan de llegar clientes
      *     (se cerraron las puertas).
      *  6. Apagado ordenado: gestorMesas.detener() -> pool.shutdown() ->
-     *     awaitTermination(5s) -> shutdownNow() si no terminó (interrumpe a los hilos
+     *     awaitTermination(45s) -> shutdownNow() si no terminó (interrumpe a los hilos
      *     que sigan bloqueados).
      *  7. Cierra el display y el archivo de log.
      */
@@ -189,8 +189,8 @@ public class Simulador {
         gestorMesas.detener();  // ← primero
         pool.shutdown();
         try {
-            if (!pool.awaitTermination(5, TimeUnit.SECONDS)) {  // ← 5 segundos, no minutos
-                pool.shutdownNow();
+            if (!pool.awaitTermination(45, TimeUnit.SECONDS)) {  // 5 segundos, no minutos
+                System.err.println("Hay hilos interrumpidos");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

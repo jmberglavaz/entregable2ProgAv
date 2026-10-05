@@ -50,16 +50,6 @@ public class Mesa {
         return true;
     }
 
-    /** El mozo la deja lista para reutilizar. */
-    public synchronized void marcarLibre() {
-        estado = EstadoMesa.LIBRE;
-        ocupantes = 0;
-        clientesEligieron = 0;
-        clientesServidos = 0;
-        menusElegidos.clear();
-        notifyAll();
-    }
-
     /**
      * Cada cliente avisa que ya eligió su menú.
      * @return true si este cliente fue el último (debe avisar al mozo).
@@ -74,25 +64,20 @@ public class Mesa {
         return false;
     }
 
-
-    /**
-     * El mozo avisa que sirvió un plato.
-     * @return true si ya se sirvieron todos (dispara el "a comer").
-     */
-    public synchronized boolean registrarPlatoServido() {
-        clientesServidos++;
-        if (clientesServidos == capacidad) {
-            estado = EstadoMesa.COMIENDO;
-            notifyAll();
-            return true;
-        }
-        return false;
-    }
-
     /** Los clientes esperan acá hasta que todos estén servidos. */
     public synchronized void esperarComida() throws InterruptedException {
         while (estado != EstadoMesa.COMIENDO) {
             wait();
+        }
+    }
+    /**
+     * El Mozo entrega un plato. Cuando están todos, los clientes comen.
+     */
+    public synchronized void recibirPlato(Plato plato) {
+        clientesServidos++;
+        if (clientesServidos == capacidad) {
+            estado = EstadoMesa.COMIENDO;
+            notifyAll();
         }
     }
 
@@ -105,10 +90,24 @@ public class Mesa {
         notifyAll();
     }
 
+    /** El mozo la deja lista para reutilizar. */
+    public synchronized void marcarLibre() {
+        estado = EstadoMesa.LIBRE;
+        ocupantes = 0;
+        clientesEligieron = 0;
+        clientesServidos = 0;
+        menusElegidos.clear();
+        notifyAll();
+    }
+
     public synchronized boolean estaVacia() { return ocupantes == 0; }
+
     public synchronized EstadoMesa getEstado() { return estado; }
+
     public int getId() { return id; }
+
     public int getCapacidad() { return capacidad; }
+
     public synchronized List<Menu> getMenusElegidos() {
         return new ArrayList<>(menusElegidos);
     }
@@ -134,28 +133,5 @@ public class Mesa {
         notifyAll();
     }
 
-    /**
-     * El Mozo entrega un plato. Cuando están todos, los clientes comen.
-     */
-    public synchronized void recibirPlato(Plato plato) {
-        clientesServidos++;
-        if (clientesServidos == capacidad) {
-            estado = EstadoMesa.COMIENDO;
-            notifyAll();
-        }
-    }
-
-    /**
-     * El Mozo terminó de limpiar.
-     */
-    public synchronized void marcarComoLibre() {
-        estado = EstadoMesa.LIBRE;
-        ocupantes = 0;
-        clientesEligieron = 0;
-        clientesServidos = 0;
-        menusElegidos.clear();
-        pedidoActual = null;
-        notifyAll();
-    }
 
 }
