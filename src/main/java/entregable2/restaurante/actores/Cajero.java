@@ -19,7 +19,7 @@ public class Cajero implements Runnable {
     private final LogSimulacion log;
     private final Configuracion config;
     private final AtomicBoolean activo;
-    private final AtomicInteger clientesCobrando;   // ← NUEVO
+    private final AtomicInteger clientesCobrando;
 
     public Cajero(int id,
                   ColaCobros colaCobros,

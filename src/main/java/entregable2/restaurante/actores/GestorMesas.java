@@ -19,7 +19,6 @@ import java.util.concurrent.locks.ReentrantLock;
  *  - BlockingQueue para pasaje de mensajes entre clientes y hostess.
  *  - ReentrantLock + Condition para exclusión mutua al elegir mesa.
  *
- * Opción 3:
  *  - run() usa poll(500ms) en lugar de take() para poder chequear "activo".
  *  - esperarMesaLibre() usa await(500ms) en lugar de await().
  *  - detener() hace signalAll() para despertar a los que esperan.

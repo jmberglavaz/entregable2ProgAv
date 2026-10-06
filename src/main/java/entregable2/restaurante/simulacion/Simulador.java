@@ -189,7 +189,7 @@ public class Simulador {
         gestorMesas.detener();  // ← primero
         pool.shutdown();
         try {
-            if (!pool.awaitTermination(45, TimeUnit.SECONDS)) {  // 5 segundos, no minutos
+            if (!pool.awaitTermination(45, TimeUnit.SECONDS)) {
                 System.err.println("Hay hilos interrumpidos");
             }
         } catch (InterruptedException e) {

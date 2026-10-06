@@ -23,7 +23,7 @@ public class GestorCierre implements Runnable {
     private final List<Mesa> mesas;
     private final ColaCobros colaCobros;
     private final AforoRestaurante aforo;
-    private final AtomicInteger clientesCobrando;   // ← NUEVO
+    private final AtomicInteger clientesCobrando;
     private final CanalEventos canalEventos;
     private final LogSimulacion log;
 
@@ -33,7 +33,7 @@ public class GestorCierre implements Runnable {
                         List<Mesa> mesas,
                         ColaCobros colaCobros,
                         AforoRestaurante aforo,
-                        AtomicInteger clientesCobrando,   // ← NUEVO
+                        AtomicInteger clientesCobrando,
                         CanalEventos canalEventos,
                         LogSimulacion log) {
         this.config = config;

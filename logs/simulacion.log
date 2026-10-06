@@ -1,111 +1,154 @@
-[17:15:09.175] [LOG] === SIMULACIÓN INICIADA ===
-[17:15:09.207] [LOG] Config: Configuracion{T=30, M=5, P=4, Z=2, C=2, Y=1, TP=[1500,3000], TM=[800,2000], TQ=[3000,6000], TZ=[800,2000], TR=[1000,2500], TL=[1000,2500], TC=[2000,5000], TY=[1000,2000]}
-[17:15:09.226] [LOG] Cocinero 2 inicia turno
-[17:15:09.228] [LOG] Cajero 1 inicia turno
-[17:15:09.228] [LOG] Mozo1inicia turno
-[17:15:09.228] [LOG] Mozo2inicia turno
-[17:15:09.228] [LOG] Cocinero 1 inicia turno
-[17:15:10.264] [LOG] Display: iniciado
-[17:15:10.274] [LOG] Reloj: esperando T=30s (30000ms)
-[17:15:13.087] [LOG #1] Cliente 1 ingresó al restaurante
-[17:15:16.098] [LOG #2] Cliente 2 ingresó al restaurante
-[17:15:18.717] [LOG #3] Cliente 3 ingresó al restaurante
-[17:15:21.258] [LOG #4] Cliente 4 ingresó al restaurante
-[17:15:21.265] [LOG #2] Cliente 2 se sentó en mesa 1
-[17:15:21.266] [LOG #1] Cliente 1 se sentó en mesa 1
-[17:15:21.266] [LOG #3] Cliente 3 se sentó en mesa 1
-[17:15:21.266] [LOG #4] Cliente 4 se sentó en mesa 1
-[17:15:22.406] [LOG #4] Cliente 4 eligió menú Ensalada
-[17:15:22.422] [LOG #2] Cliente 2 eligió menú Asado
-[17:15:22.645] [LOG #3] Cliente 3 eligió menú Ensalada
-[17:15:22.854] [LOG #1] Cliente 1 eligió menú Asado
-[17:15:22.854] [LOG #1] Mesa 1 lista para pedir
-[17:15:23.196] [LOG #5] Cliente 5 ingresó al restaurante
-[17:15:24.462] [LOG] Mozo 2 toma pedido 1 de mesa 1
-[17:15:24.464] [LOG #2] Cocinero 2 tomó pedido 1 de mesa 1
-[17:15:25.342] [LOG #6] Cliente 6 ingresó al restaurante
-[17:15:25.792] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 1
-[17:15:27.532] [LOG] Mozo2sirve plato1a mesa1
-[17:15:28.141] [LOG #7] Cliente 7 ingresó al restaurante
-[17:15:30.547] [LOG #8] Cliente 8 ingresó al restaurante
-[17:15:30.548] [LOG #5] Cliente 5 se sentó en mesa 2
-[17:15:30.548] [LOG #8] Cliente 8 se sentó en mesa 2
-[17:15:30.548] [LOG #7] Cliente 7 se sentó en mesa 2
-[17:15:30.549] [LOG #6] Cliente 6 se sentó en mesa 2
-[17:15:30.917] [LOG #2] Cocinero 2 cocinó Asado para pedido 1
-[17:15:31.363] [LOG #7] Cliente 7 eligió menú Asado
-[17:15:31.874] [LOG #6] Cliente 6 eligió menú Asado
-[17:15:32.116] [LOG #8] Cliente 8 eligió menú Ensalada
-[17:15:32.452] [LOG #5] Cliente 5 eligió menú Asado
-[17:15:32.452] [LOG #5] Mesa 2 lista para pedir
-[17:15:32.495] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 1
-[17:15:32.566] [LOG] Mozo1sirve plato2a mesa1
-[17:15:32.701] [LOG #9] Cliente 9 ingresó al restaurante
-[17:15:34.015] [LOG] Mozo2sirve plato3a mesa1
-[17:15:34.591] [LOG] Mozo 1 toma pedido 2 de mesa 2
-[17:15:34.591] [LOG #1] Cocinero 1 tomó pedido 2 de mesa 2
-[17:15:35.615] [LOG #10] Cliente 10 ingresó al restaurante
-[17:15:37.838] [LOG #2] Cocinero 2 cocinó Asado para pedido 1
-[17:15:37.846] [LOG #2] Pedido 1 completo
-[17:15:38.532] [LOG #11] Cliente 11 ingresó al restaurante
-[17:15:38.684] [LOG #1] Cocinero 1 cocinó Asado para pedido 2
-[17:15:39.463] [LOG] Mozo1sirve plato4a mesa1
-[17:15:39.464] [LOG #4] Cliente 4 tiene su plato en mesa 1
-[17:15:39.465] [LOG #3] Cliente 3 tiene su plato en mesa 1
-[17:15:39.466] [LOG #1] Cliente 1 tiene su plato en mesa 1
-[17:15:39.467] [LOG #2] Cliente 2 tiene su plato en mesa 1
-[17:15:40.276] [LOG] Reloj: T cumplido, disparando cierre
-[17:15:40.276] [LOG] === INICIANDO CIERRE DEL RESTAURANTE ===
-[17:15:40.662] [LOG] Mozo2sirve plato5a mesa2
-[17:15:42.637] [LOG #3] Cliente 3 terminó de comer
-[17:15:42.639] [LOG #3] Cliente 3 pagó
-[17:15:42.640] [LOG #3] Cliente 3 se retiró del restaurante
-[17:15:43.444] [LOG #1] Cocinero 1 cocinó Asado para pedido 2
-[17:15:43.679] [LOG #1] Cajero 1 cobró a cliente 3
-[17:15:44.341] [LOG #2] Cliente 2 terminó de comer
-[17:15:44.342] [LOG #2] Cliente 2 pagó
-[17:15:44.342] [LOG #2] Cliente 2 se retiró del restaurante
-[17:15:44.735] [LOG #1] Cliente 1 terminó de comer
-[17:15:44.735] [LOG #1] Cliente 1 pagó
-[17:15:44.736] [LOG #1] Cliente 1 se retiró del restaurante
-[17:15:44.958] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 2
-[17:15:45.156] [LOG #4] Cliente 4 terminó de comer
-[17:15:45.157] [LOG #4] Cliente 4 pagó
-[17:15:45.158] [LOG #4] Mesa 1 quedó sin clientes
-[17:15:45.161] [LOG #4] Cliente 4 se retiró del restaurante
-[17:15:45.174] [LOG] Mozo2sirve plato6a mesa2
-[17:15:45.379] [LOG #1] Cajero 1 cobró a cliente 2
-[17:15:47.118] [LOG] Mozo1sirve plato7a mesa2
-[17:15:47.309] [LOG #1] Cajero 1 cobró a cliente 1
-[17:15:47.640] [LOG] Mozo2limpia mesa1
-[17:15:48.528] [LOG #1] Cajero 1 cobró a cliente 4
-[17:15:50.358] [LOG #1] Cocinero 1 cocinó Asado para pedido 2
-[17:15:50.358] [LOG #1] Pedido 2 completo
-[17:15:52.152] [LOG] Mozo2sirve plato8a mesa2
-[17:15:52.153] [LOG #7] Cliente 7 tiene su plato en mesa 2
-[17:15:52.153] [LOG #6] Cliente 6 tiene su plato en mesa 2
-[17:15:52.153] [LOG #5] Cliente 5 tiene su plato en mesa 2
-[17:15:52.153] [LOG #8] Cliente 8 tiene su plato en mesa 2
-[17:15:55.299] [LOG #8] Cliente 8 terminó de comer
-[17:15:55.299] [LOG #8] Cliente 8 pagó
-[17:15:55.299] [LOG #8] Cliente 8 se retiró del restaurante
-[17:15:56.607] [LOG #7] Cliente 7 terminó de comer
-[17:15:56.607] [LOG #7] Cliente 7 pagó
-[17:15:56.607] [LOG #7] Cliente 7 se retiró del restaurante
-[17:15:56.855] [LOG #6] Cliente 6 terminó de comer
-[17:15:56.855] [LOG #6] Cliente 6 pagó
-[17:15:56.855] [LOG #6] Cliente 6 se retiró del restaurante
-[17:15:57.255] [LOG #1] Cajero 1 cobró a cliente 8
-[17:15:57.390] [LOG #5] Cliente 5 terminó de comer
-[17:15:57.390] [LOG #5] Cliente 5 pagó
-[17:15:57.391] [LOG #5] Mesa 2 quedó sin clientes
-[17:15:57.391] [LOG #5] Cliente 5 se retiró del restaurante
-[17:15:58.837] [LOG] Mozo1limpia mesa2
-[17:15:59.195] [LOG #1] Cajero 1 cobró a cliente 7
-[17:16:00.594] [LOG #1] Cajero 1 cobró a cliente 6
-[17:16:01.957] [LOG #1] Cajero 1 cobró a cliente 5
-[17:16:02.318] [LOG] === TODOS LOS CLIENTES SE RETIRARON ===
-[17:16:02.318] [LOG] Display: finalizado
-[17:16:02.424] [LOG] Mozo2termina turno
-[17:16:02.471] [LOG] Mozo1termina turno
-[17:16:26.300] [LOG] === SIMULACIÓN FINALIZADA ===
+[22:47:18.092] [LOG] === SIMULACIÓN INICIADA ===
+[22:47:18.151] [LOG] Config: Configuracion{T=30, M=5, P=4, Z=2, C=2, Y=1, TP=[1500,3000], TM=[800,2000], TQ=[3000,6000], TZ=[800,2000], TR=[1000,2500], TL=[1000,2500], TC=[2000,5000], TY=[1000,2000]}
+[22:47:18.160] [LOG] Cocinero 1 inicia turno
+[22:47:18.161] [LOG] Cajero 1 inicia turno
+[22:47:18.161] [LOG] Mozo1inicia turno
+[22:47:18.161] [LOG] Cocinero 2 inicia turno
+[22:47:18.161] [LOG] Mozo2inicia turno
+[22:47:21.073] [LOG] Display: iniciado
+[22:47:21.080] [LOG] Reloj: esperando T=30s (30000ms)
+[22:47:23.041] [LOG #1] Cliente 1 ingresó al restaurante
+[22:47:25.168] [LOG #2] Cliente 2 ingresó al restaurante
+[22:47:27.467] [LOG #3] Cliente 3 ingresó al restaurante
+[22:47:29.491] [LOG #4] Cliente 4 ingresó al restaurante
+[22:47:29.492] [LOG #2] Cliente 2 se sentó en mesa 1
+[22:47:29.494] [LOG #3] Cliente 3 se sentó en mesa 1
+[22:47:29.494] [LOG #4] Cliente 4 se sentó en mesa 1
+[22:47:29.494] [LOG #1] Cliente 1 se sentó en mesa 1
+[22:47:30.503] [LOG #1] Cliente 1 eligió menú Ensalada
+[22:47:30.738] [LOG #3] Cliente 3 eligió menú Pasta
+[22:47:30.743] [LOG #2] Cliente 2 eligió menú Pasta
+[22:47:31.029] [LOG #4] Cliente 4 eligió menú Asado
+[22:47:31.029] [LOG #4] Mesa 1 lista para pedir
+[22:47:32.045] [LOG #5] Cliente 5 ingresó al restaurante
+[22:47:32.234] [LOG] Mozo 2 toma pedido 1 de mesa 1
+[22:47:32.234] [LOG #1] Cocinero 1 tomó pedido 1 de mesa 1
+[22:47:33.744] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 1
+[22:47:34.532] [LOG #6] Cliente 6 ingresó al restaurante
+[22:47:35.492] [LOG] Mozo2sirve plato1a mesa1
+[22:47:37.305] [LOG #1] Cocinero 1 cocinó Pasta para pedido 1
+[22:47:37.438] [LOG #7] Cliente 7 ingresó al restaurante
+[22:47:39.367] [LOG] Mozo1sirve plato2a mesa1
+[22:47:39.684] [LOG #8] Cliente 8 ingresó al restaurante
+[22:47:39.685] [LOG #5] Cliente 5 se sentó en mesa 2
+[22:47:39.685] [LOG #6] Cliente 6 se sentó en mesa 2
+[22:47:39.686] [LOG #7] Cliente 7 se sentó en mesa 2
+[22:47:39.686] [LOG #8] Cliente 8 se sentó en mesa 2
+[22:47:40.191] [LOG #1] Cocinero 1 cocinó Pasta para pedido 1
+[22:47:40.697] [LOG #6] Cliente 6 eligió menú Ensalada
+[22:47:40.754] [LOG #5] Cliente 5 eligió menú Pasta
+[22:47:40.809] [LOG #8] Cliente 8 eligió menú Pasta
+[22:47:41.366] [LOG #7] Cliente 7 eligió menú Ensalada
+[22:47:41.366] [LOG #7] Mesa 2 lista para pedir
+[22:47:41.481] [LOG] Mozo2sirve plato3a mesa1
+[22:47:42.079] [LOG #9] Cliente 9 ingresó al restaurante
+[22:47:43.037] [LOG] Mozo 1 toma pedido 2 de mesa 2
+[22:47:43.037] [LOG #2] Cocinero 2 tomó pedido 2 de mesa 2
+[22:47:43.870] [LOG #10] Cliente 10 ingresó al restaurante
+[22:47:44.639] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 2
+[22:47:45.422] [LOG #11] Cliente 11 ingresó al restaurante
+[22:47:45.489] [LOG #1] Cocinero 1 cocinó Asado para pedido 1
+[22:47:45.490] [LOG #1] Pedido 1 completo
+[22:47:46.863] [LOG] Mozo2sirve plato4a mesa2
+[22:47:47.088] [LOG #12] Cliente 12 ingresó al restaurante
+[22:47:47.088] [LOG #9] Cliente 9 se sentó en mesa 3
+[22:47:47.088] [LOG #12] Cliente 12 se sentó en mesa 3
+[22:47:47.088] [LOG #11] Cliente 11 se sentó en mesa 3
+[22:47:47.089] [LOG #10] Cliente 10 se sentó en mesa 3
+[22:47:47.117] [LOG] Mozo1sirve plato5a mesa1
+[22:47:47.118] [LOG #2] Cliente 2 tiene su plato en mesa 1
+[22:47:47.118] [LOG #4] Cliente 4 tiene su plato en mesa 1
+[22:47:47.119] [LOG #3] Cliente 3 tiene su plato en mesa 1
+[22:47:47.119] [LOG #1] Cliente 1 tiene su plato en mesa 1
+[22:47:47.816] [LOG #2] Cocinero 2 cocinó Pasta para pedido 2
+[22:47:48.116] [LOG #12] Cliente 12 eligió menú Ensalada
+[22:47:48.450] [LOG #9] Cliente 9 eligió menú Ensalada
+[22:47:48.721] [LOG #10] Cliente 10 eligió menú Ensalada
+[22:47:48.791] [LOG #11] Cliente 11 eligió menú Ensalada
+[22:47:48.792] [LOG #11] Mesa 3 lista para pedir
+[22:47:49.736] [LOG #13] Cliente 13 ingresó al restaurante
+[22:47:49.830] [LOG] Mozo1sirve plato6a mesa2
+[22:47:50.033] [LOG] Mozo 2 toma pedido 3 de mesa 3
+[22:47:50.034] [LOG #1] Cocinero 1 tomó pedido 3 de mesa 3
+[22:47:51.072] [LOG #4] Cliente 4 terminó de comer
+[22:47:51.073] [LOG #4] Cliente 4 pagó
+[22:47:51.074] [LOG #4] Cliente 4 se retiró del restaurante
+[22:47:51.085] [LOG] Reloj: T cumplido, disparando cierre
+[22:47:51.086] [LOG] === INICIANDO CIERRE DEL RESTAURANTE ===
+[22:47:51.097] [LOG #2] Cocinero 2 cocinó Pasta para pedido 2
+[22:47:51.275] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 3
+[22:47:51.954] [LOG #1] Cliente 1 terminó de comer
+[22:47:51.955] [LOG #1] Cliente 1 pagó
+[22:47:51.955] [LOG #1] Cliente 1 se retiró del restaurante
+[22:47:51.963] [LOG #3] Cliente 3 terminó de comer
+[22:47:51.964] [LOG #3] Cliente 3 pagó
+[22:47:51.964] [LOG #3] Cliente 3 se retiró del restaurante
+[22:47:52.341] [LOG #2] Cliente 2 terminó de comer
+[22:47:52.342] [LOG #2] Cliente 2 pagó
+[22:47:52.342] [LOG #2] Mesa 1 quedó sin clientes
+[22:47:52.342] [LOG #2] Cliente 2 se retiró del restaurante
+[22:47:52.382] [LOG] Mozo1sirve plato7a mesa2
+[22:47:52.420] [LOG #1] Cajero 1 cobró a cliente 4
+[22:47:52.440] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 3
+[22:47:52.535] [LOG #2] Cocinero 2 cocinó Ensalada para pedido 2
+[22:47:52.535] [LOG #2] Pedido 2 completo
+[22:47:53.327] [LOG] Mozo2sirve plato8a mesa3
+[22:47:53.751] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 3
+[22:47:53.929] [LOG #1] Cajero 1 cobró a cliente 1
+[22:47:53.962] [LOG] Mozo1sirve plato9a mesa3
+[22:47:54.618] [LOG] Mozo2sirve plato10a mesa2
+[22:47:54.619] [LOG #6] Cliente 6 tiene su plato en mesa 2
+[22:47:54.619] [LOG #7] Cliente 7 tiene su plato en mesa 2
+[22:47:54.620] [LOG #5] Cliente 5 tiene su plato en mesa 2
+[22:47:54.620] [LOG #8] Cliente 8 tiene su plato en mesa 2
+[22:47:55.289] [LOG #1] Cajero 1 cobró a cliente 3
+[22:47:55.341] [LOG #1] Cocinero 1 cocinó Ensalada para pedido 3
+[22:47:55.341] [LOG #1] Pedido 3 completo
+[22:47:55.444] [LOG] Mozo1sirve plato11a mesa3
+[22:47:56.442] [LOG] Mozo2limpia mesa1
+[22:47:56.663] [LOG #1] Cajero 1 cobró a cliente 2
+[22:47:57.433] [LOG] Mozo1sirve plato12a mesa3
+[22:47:57.433] [LOG #12] Cliente 12 tiene su plato en mesa 3
+[22:47:57.433] [LOG #9] Cliente 9 tiene su plato en mesa 3
+[22:47:57.434] [LOG #11] Cliente 11 tiene su plato en mesa 3
+[22:47:57.434] [LOG #10] Cliente 10 tiene su plato en mesa 3
+[22:47:57.646] [LOG #5] Cliente 5 terminó de comer
+[22:47:57.647] [LOG #5] Cliente 5 pagó
+[22:47:57.647] [LOG #5] Cliente 5 se retiró del restaurante
+[22:47:59.334] [LOG #1] Cajero 1 cobró a cliente 5
+[22:48:00.000] [LOG #8] Cliente 8 terminó de comer
+[22:48:00.001] [LOG #8] Cliente 8 pagó
+[22:48:00.001] [LOG #8] Cliente 8 se retiró del restaurante
+[22:48:00.287] [LOG #6] Cliente 6 terminó de comer
+[22:48:00.288] [LOG #6] Cliente 6 pagó
+[22:48:00.288] [LOG #6] Cliente 6 se retiró del restaurante
+[22:48:00.465] [LOG #7] Cliente 7 terminó de comer
+[22:48:00.466] [LOG #7] Cliente 7 pagó
+[22:48:00.466] [LOG #7] Mesa 2 quedó sin clientes
+[22:48:00.466] [LOG #7] Cliente 7 se retiró del restaurante
+[22:48:00.532] [LOG #11] Cliente 11 terminó de comer
+[22:48:00.533] [LOG #11] Cliente 11 pagó
+[22:48:00.533] [LOG #11] Cliente 11 se retiró del restaurante
+[22:48:01.128] [LOG #10] Cliente 10 terminó de comer
+[22:48:01.128] [LOG #10] Cliente 10 pagó
+[22:48:01.128] [LOG #10] Cliente 10 se retiró del restaurante
+[22:48:01.548] [LOG] Mozo1limpia mesa2
+[22:48:01.564] [LOG #1] Cajero 1 cobró a cliente 8
+[22:48:02.790] [LOG #1] Cajero 1 cobró a cliente 6
+[22:48:02.834] [LOG #9] Cliente 9 terminó de comer
+[22:48:02.834] [LOG #9] Cliente 9 pagó
+[22:48:02.834] [LOG #9] Cliente 9 se retiró del restaurante
+[22:48:03.421] [LOG #12] Cliente 12 terminó de comer
+[22:48:03.421] [LOG #12] Cliente 12 pagó
+[22:48:03.421] [LOG #12] Mesa 3 quedó sin clientes
+[22:48:03.421] [LOG #12] Cliente 12 se retiró del restaurante
+[22:48:04.244] [LOG #1] Cajero 1 cobró a cliente 7
+[22:48:05.925] [LOG] Mozo2limpia mesa3
+[22:48:05.955] [LOG #1] Cajero 1 cobró a cliente 11
+[22:48:07.257] [LOG #1] Cajero 1 cobró a cliente 10
+[22:48:08.332] [LOG #1] Cajero 1 cobró a cliente 9
+[22:48:10.233] [LOG #1] Cajero 1 cobró a cliente 12
+[22:48:10.721] [LOG] === TODOS LOS CLIENTES SE RETIRARON ===
+[22:48:10.721] [LOG] Display: finalizado
+[22:48:10.815] [LOG] Mozo2termina turno
+[22:48:11.312] [LOG] Mozo1termina turno
